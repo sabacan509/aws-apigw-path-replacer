@@ -164,8 +164,6 @@ export default {
     // rename resource name, the trigger is resource click
     updateResourceName: function() {
       let resourceId = this.selectedResource.id;
-      console.log("id: " + resourceId);
-      console.log("pathPartInput: " + this.pathPartInput);
 
       let q = "regionId=" + this.$store.state.regionId;
       q += "&restApiId=" + this.selectedApiId;
@@ -173,7 +171,6 @@ export default {
       q += "&op=replace";
       q += "&path=/pathPart";
       q += "&value=" + this.pathPartInput;
-      console.log(q);
       axios.put('/resources/' + resourceId + '?' + q).then((response) => {
         console.log(response);
         this.selectAPI(this.selectedApiId);
@@ -188,8 +185,6 @@ export default {
     replaceResourcePosition: function() {
       let resourceId = this.draggingItem.id;
       let parentId = this.recipientItem.id;
-      console.log("resourceId: " + resourceId);
-      console.log("parentId: " + parentId);
 
       let q = "regionId=" + this.$store.state.regionId;
       q += "&restApiId=" + this.selectedApiId;
@@ -197,9 +192,7 @@ export default {
       q += "&op=replace";
       q += "&path=/parentId";
       q += "&value=" + parentId;
-      console.log(q);
       axios.put('/resources/' + resourceId + '?' + q).then((response) => {
-        console.log(response);
         this.selectAPI(this.selectedApiId);
 				this.$refs.RscDrawer.close();
       }, (error) => {
@@ -209,40 +202,22 @@ export default {
     },
 
     dragHandler: function(draggingItem) {
-      console.log("dragHandler");
       this.draggingItem = draggingItem;
     },
-    // dragEnterHandler: function(recipientItem) {
-    //   // console.log("dragEnterHandler");
-    //   // this.recipientItem = recipientItem;
-    // },
     dragOverHandler: function(recipientItem) {
-      console.log("dragEnterHandler");
       this.recipientItem = recipientItem;
     },
-    // dragLeaveHandler: function(leavingItem) {
-    //   // console.log("dragLeaveHandler");
-    //   // if (this.recipientItem == leavingItem) {
-    //   //   this.recipientItem = null;
-    //   // }
-    // },
     dragEndHandler: function() {
-      console.log("dragEndHandler");
-      // this.draggingItem = draggingItem;
       if (this.draggingItem && this.recipientItem) {
-        console.log(this.draggingItem.id);
-        console.log(this.recipientItem.id);
         if (this.draggingItem != this.recipientItem) {
           this.showModal = true;
         }
       }
     },
     releaseDragInfo: function() {
-      console.log("releaseDragInfo");
       this.recipientItem = null;
     },
     selectOK: function() {
-      console.log("selectOK");
       this.showModal = false;
       this.replaceResourcePosition();
     }
@@ -293,7 +268,6 @@ function updateTreeState(obj, type, targetItem)
 {
   if (obj == targetItem) {
     if (type == "select") {
-      console.log("updateTreeState: " + obj.id);
       obj.selectFlg = true;
     }
   } else {

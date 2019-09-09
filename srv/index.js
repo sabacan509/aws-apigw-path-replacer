@@ -1,7 +1,6 @@
 import express from 'express';
 var fs = require('fs');
 const bodyParser = require('body-parser');
-// import socketIO from "socket.io";
 var AWS = require('aws-sdk');
 
 const PROFILE_NAME = 'aws_apigw_path_replacer';
@@ -35,13 +34,11 @@ function isExistsTargetAWSProfile(data)
         break;
       }
       else {
-        // console.log(tmp);
         tartgetLines.push(tmp);
       }
     }
     else {
       if (reg.test(tmp)) {
-        // console.log(tmp);
         inTargetProfile = true;
       }
     }
@@ -110,51 +107,9 @@ app.use(bodyParser.json());
     }
   });
 
-  // app.post('/savekey', (req, res) => {
-  //   console.log(req.body);
-  //   let accessKey = req.body.accessKey;
-  //   let secret = req.body.secret;
-  //   let dir = process.env[process.platform == "win32" ? "USERPROFILE" : "HOME"];
-  //   let path = dir + "/.aws/aaa.txt"
-  //   let writable = true;
-  //   try {
-  //     fs.statSync(path);
-  //     fs.readFile(path, 'utf8', function(err, data) {
-  //       console.log(err);
-  //       console.log("------------");
-  //       console.log(data);
-  //       if (isExistsTargetAWSProfile(data)) {
-  //         res.json({
-  //           profile: "ok"
-  //         })
-  //       } else {
-  //         res.json({
-  //           error: "No exists AWS profile []"
-  //         })
-  //       }
-  //     });
-  //   }
-  //   catch (err) {
-  //     console.log(err);
-  //   }
-
-  //   let data = "[aws_apigw_path_replacer]";
-  //   data += "\n" + "aws_access_key_id=" + accessKey;
-  //   data += "\n" + "aws_secret_access_key=" + secret;
-  //   // path = "/Users/mashuser/.aws/aaa.txt";
-  //   fs.writeFileSync(path, data, function(err) {
-  //     console.log(err);
-  //     console.log("------------");
-  //     console.log("writeFile");
-  //   });
-  // });
-
   // Call: AwsApiGateway.getRestApis()
   app.get('/apiget', (req, res) => {
-    // console.log(req);
-    // console.log(req.params);
     let regionId = req.query.regionId;
-    console.log(regionId);
 
     let apigateway = getApiGwCtrl(regionId);
     var params = {
@@ -172,7 +127,6 @@ app.use(bodyParser.json());
         console.log(data);
         for(let i=0; i < data.items.length; i++) {
           let item = data.items[i];
-          // console.log(item);
           itemList.push({
             id: item.id,
             name: item.name
@@ -181,7 +135,6 @@ app.use(bodyParser.json());
         let r = {
           items: itemList
         }
-        // console.log(r);
         res.json(r);
       }
     });
@@ -189,12 +142,8 @@ app.use(bodyParser.json());
 
   // Call: AwsApiGateway.getResources()
   app.get('/resources', (req, res) => {
-    // console.log(req);
-    // console.log(req.params);
     let regionId = req.query.regionId;
     let restApiId = req.query.restApiId;
-    console.log(regionId);
-    console.log("restApiId: " + restApiId);
 
     let apigateway = getApiGwCtrl(regionId);
     var params = {
@@ -213,11 +162,8 @@ app.use(bodyParser.json());
 
   // Call: AwsApiGateway.updateResource()
   app.put('/resources/:id', (req, res) => {
-    // console.log(req);
-    // console.log(req.params);
     let regionId = req.query.regionId;
     let restApiId = req.query.restApiId;
-    // let resourceId = req.query.resourceId;
     let resourceId = req.params.id;
     let op = req.query.op;
     let path = req.query.path;

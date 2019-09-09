@@ -1,4 +1,4 @@
-# aws-apigw-path-replacer
+# AWS APIGateway Path Replacer GUI
 
 The main components for this app are vue-cli and aws-sdk for Node.js.
 

@@ -67,58 +67,6 @@ export default {
       loginDisable: true
     }
   },
-  // created: function() {
-  //   // check keys
-  //   let aws_access_key_id_check = false;
-  //   let aws_secret_access_key_check = false;
-
-  //   let data = "[aaaa]\naws_access_key_id=AKIAZ36OTMLGI7W5B67E\naws_secret_access_key=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";
-  //   let lines = data.split("\n");
-  //   let inTargetProfile = false;
-  //   let tartgetLines = [];
-
-  //   // push text lines into tartgetLines of target profile
-  //   for (let i=0; i < lines.length; i++) {
-  //     tmp = lines[i];
-  //     if (inTargetProfile) {
-  //       if (tmp.match(/^\[.+\]$/)) {
-  //         break;
-  //       }
-  //       else {
-  //         tartgetLines.push(tmp);
-  //       }
-  //     }
-  //     else {
-  //       if (tmp.match(/^\[aaaa\]$/)) {
-  //         inTargetProfile = true;
-  //       }
-  //     }
-  //   }
-    
-  //   // keys exist check in tartgetLines
-  //   for (let i=0; i < tartgetLines.length; i++) {
-  //     tmp = tartgetLines[i];
-  //     let sp = tmp.split("=");
-  //     console.log(tmp);
-  //     if (sp.length == 2) {
-  //       let keyname = sp[0];
-  //       keyname = keyname.trim();
-  //       if (keyname == "aws_access_key_id") {
-  //         aws_access_key_id_check = true;
-  //       }
-  //       else if (keyname == "aws_secret_access_key") {
-  //         aws_secret_access_key_check = true;
-  //       }
-  //     }
-  //   }
-  //   if (aws_access_key_id_check && aws_secret_access_key_check) {
-  //     console.log("AWS_ACCESS_KEY_SUCCESS");
-  //   }
-  //   else {
-  //     console.log("ERR");
-  //   }
-
-  // },
   created: function() {
     this.profileCheck();
   },
@@ -128,9 +76,7 @@ export default {
       if (this.$refs.regionId) {
         regionId = this.$refs.regionId.value;
       }
-      // console.log(regionId);
       this.loginDisable = !(this.profileExists && regionId.length > 0);
-      // console.log(this.loginDisable);
     },
 
     profileCheck: function() {
@@ -148,7 +94,6 @@ export default {
         this.profileExists = false;
         console.log(error);
         this.messageForProfileCheck = "Connection Error. Please check express server status. ";
-        // alert("Data GET Error");
       });
     },
 
@@ -157,7 +102,6 @@ export default {
       this.$store.state.regionId = regionId;
 
       axios.get('/apiget?regionId=' + this.$store.state.regionId).then((response) => {
-        console.log(response);
         let jsonData = response.data;
 
         let apiList = [];
@@ -178,7 +122,6 @@ export default {
       }, (error) => {
         console.log(error);
         let jsonData = error;
-        // alert("Login Error!");
         this.validRegion = false;
         this.messageForValidRegionCheck = "Region error or incorrect credential!";
       });
