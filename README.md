@@ -1,8 +1,8 @@
 # AWS APIGateway Path Replacer GUI
 
-![コンセプト２](https://user-images.githubusercontent.com/54195833/64545495-cd3c1280-d363-11e9-989f-b44de9878f85.jpg)
+![concept1](https://user-images.githubusercontent.com/54195833/64548894-843b8c80-d36a-11e9-8a14-73501b4a285e.jpg)
 
-![コンセプト](https://user-images.githubusercontent.com/54195833/64548548-cc0de400-d369-11e9-8352-805900f64d35.jpg)
+![concept2](https://user-images.githubusercontent.com/54195833/64548898-869de680-d36a-11e9-8b38-bd0d6e973d4e.jpg)
 
 ## First, Project setup
 ```
