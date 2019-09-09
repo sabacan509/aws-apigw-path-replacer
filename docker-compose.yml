@@ -1,0 +1,11 @@
+version: '3'
+services:
+  web:
+    build: .
+    ports:
+      - 3131:3000
+    volumes:
+      - .:/app
+      - ~/.aws:/root/.aws
+    stdin_open: true
+    tty: true
