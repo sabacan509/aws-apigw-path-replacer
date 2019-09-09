@@ -6,6 +6,8 @@
 
 ## First, Project setup
 ```
+git clone https://github.com/sabacan509/aws-apigw-path-replacer.git
+cd aws-apigw-path-replacer
 npm install
 ```
 
@@ -21,7 +23,7 @@ npm run express:run
 http://localhost:3000/
 ```
 
-### For docker user, instead of above build and run.
+### For docker user, instead of above build and run:
 ```
 docker-compose up -d --build
 ```
