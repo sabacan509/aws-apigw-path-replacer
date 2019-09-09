@@ -2,6 +2,8 @@
 
 ![コンセプト２](https://user-images.githubusercontent.com/54195833/64545495-cd3c1280-d363-11e9-989f-b44de9878f85.jpg)
 
+![コンセプト](https://user-images.githubusercontent.com/54195833/64548548-cc0de400-d369-11e9-8352-805900f64d35.jpg)
+
 ## First, Project setup
 ```
 npm install
