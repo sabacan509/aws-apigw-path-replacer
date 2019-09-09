@@ -22,10 +22,10 @@ export default new Vuex.Store({
     },
     urlIAMManual: () => {
       // IAM Setting Manual Page For This App.
-      return 'https://sabacan509.github.io/aws_apigw_path_replacer_man/preuse_manual.html';
+      return 'https://sabacan509.github.io/aws_apigw_path_replacer_man/credential_manual.html';
     },
     urlCredentialManual: () => {
-      return 'https://sabacan509.github.io/aws_apigw_path_replacer_man/credential_manual.html';
+      return 'https://sabacan509.github.io/aws_apigw_path_replacer_man/credential_manual.html#credential_file';
     },
     footerString: () => {
       return '@GitHub'
