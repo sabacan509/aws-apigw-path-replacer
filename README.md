@@ -8,12 +8,12 @@
 ```
 git clone https://github.com/sabacan509/aws-apigw-path-replacer.git
 cd aws-apigw-path-replacer
-npm install
 ```
 
-## For This App User
-### Compile for production, and start API Server and GUI Server
+## For This App User: * You need Node.js (npm) before.
+### Build app, and start API Server and GUI Server
 ```
+npm install
 npm run build
 npm run express:run
 ```

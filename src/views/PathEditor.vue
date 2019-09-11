@@ -61,10 +61,6 @@ import ModalDialog from '@/components/ModalDialog.vue'
 
 export default {
   name: 'PathEditor',
-  // props: {
-  //   regionId : String,
-  //   isError: Boolean
-  // },
   components: {
     TreeItem,
     Drawer,
@@ -86,7 +82,6 @@ export default {
     }
   },
   created: function(){
-    // console.log("created --");
     this.footer1 = "";
     this.resourceTree = {};
     this.recipientItem = null;
@@ -123,13 +118,12 @@ export default {
       axios.get('/resources?' + q).then((response) => {
         let jsonData = response.data;
         let treeData = createResourceTree(jsonData.items);
-        // console.log(treeData);
         this.resourceTree = treeData;
         this.selectedApiId = apiId;
         this.selectedAPIName = apiName;
       }, (error) => {
         console.log(error);
-        alert("データ取得エラー");
+        alert("Date Get Error");
       });
     },
 
