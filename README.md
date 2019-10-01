@@ -4,6 +4,20 @@
 
 ![concept2](https://user-images.githubusercontent.com/54195833/64548898-869de680-d36a-11e9-8b38-bd0d6e973d4e.jpg)
 
+On AWS API Gateway console (AWS Web console), we can add or remove api path resources, then we can create method to those resources.
+On the otherhand, we also want to change API path with that web console, but it can't.
+```
+For example: /person/age-info -> /person/info
+```
+You must use the AWS CLI or SDK for this action. It takes time to do every time.
+
+So we created a support app for it. This app will help to change the api path.
+The inside of this app is simple. Start the WEB server locally with node.js and access to your AWS resource directly by AWS SDK for node.js. It's secure.
+
+Try this app with the following text commands.
+
+Oops, you need "npm" or "docker-compose". If you don't have either, install it first.
+
 ## First, Project setup
 ```
 git clone https://github.com/sabacan509/aws-apigw-path-replacer.git
