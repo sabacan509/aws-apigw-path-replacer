@@ -20,7 +20,7 @@
               <button class="modal-default-button" @click="$emit('close')">
                 Cancel
               </button>
-			        <span>&nbsp;</span>
+              <span>&nbsp;</span>
               <button class="modal-default-button" @click="$emit('ok')">
                 OK
               </button>

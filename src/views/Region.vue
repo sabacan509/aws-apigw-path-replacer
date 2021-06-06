@@ -121,7 +121,6 @@ export default {
 
       }, (error) => {
         console.log(error);
-        let jsonData = error;
         this.validRegion = false;
         this.messageForValidRegionCheck = "Region error or incorrect credential!";
       });

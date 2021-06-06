@@ -51,7 +51,7 @@
 			document.addEventListener('touchcancel',(e) =>{this.handleEnd(e)});
 			window.addEventListener('resize', (e) =>{this.setVisibality(e)}, true);
 			this.overlay.addEventListener('transitionend',(e) =>{this.handleZindex(e)},false);			
-			this.overlay.addEventListener('click',(e) =>{this.close()},false);
+			this.overlay.addEventListener('click',() =>{this.close()},false);
 			this.setVisibality();
 		},
 		methods:{
@@ -63,9 +63,9 @@
 				}
 			},
 			handleStart(e){
-				  	this.startTime = new Date().getTime();
-				   	this.startPos = e.targetTouches[0].pageX;
-				   	this.element.style.transitionDuration = this.manual_speed;	
+					this.startTime = new Date().getTime();
+					this.startPos = e.targetTouches[0].pageX;
+					this.element.style.transitionDuration = this.manual_speed;	
 			},
 			handleMove(e){
 					let gesture = this.gesture(e);
@@ -154,8 +154,8 @@
 				this.element.style.transform = 'translate3d('+this.translate+',0,0)';
 				this.element.style.transitionDuration = this.auto_speed;
 				this.overlayOpacity(1);
-	    		this.lock(document.querySelector('html'));
-	    		this.lock(document.querySelector('body'));
+				this.lock(document.querySelector('html'));
+				this.lock(document.querySelector('body'));
 				this.element.classList.add('active');	
 				this.active = true;	
 			},
@@ -168,8 +168,8 @@
 				this.element.style.transform = 'translate3d('+this.translate+',0,0)';	
 				this.element.style.transitionDuration = this.auto_speed;	
 				this.overlayOpacity(0);
-	    		this.unlock(document.querySelector('html'));
-	    		this.unlock(document.querySelector('body'));
+				this.unlock(document.querySelector('html'));
+				this.unlock(document.querySelector('body'));
 				this.element.classList.remove('active');	
 				this.active = false;
 			},
@@ -215,25 +215,25 @@
 </script>
 <style scoped>
 	div.overlay{
-	    position:fixed;
-	    z-index: -999;
-	    left: 0px;
-	    top:0px;
-	    background:rgba(11, 10, 12, 0.35);
-	    opacity: 0;
-	    width: 100%;
-	    height: 100%;
-	    transition: opacity 0.3s ease;
+		position:fixed;
+		z-index: -999;
+		left: 0px;
+		top:0px;
+		background:rgba(11, 10, 12, 0.35);
+		opacity: 0;
+		width: 100%;
+		height: 100%;
+		transition: opacity 0.3s ease;
 	}
 	aside.sidebar{
-	    z-index: 9999;
-	    position: fixed;
-	    will-change: transform;
-	    height: 100%;
-	    top: 0px;
+		z-index: 9999;
+		position: fixed;
+		will-change: transform;
+		height: 100%;
+		top: 0px;
 		transition:transform 0.3s ease;
-	    background:#fff;
-	    width: 300px;
+		background:#fff;
+		width: 300px;
 		overflow-y: auto;
 		overflow-x: hidden;
 		word-wrap: break-word;

@@ -1,9 +1,8 @@
-FROM node:10.16.3-alpine
+FROM node:14-alpine
 
 WORKDIR /app
 
-RUN apk update && \
-    npm install -g npm && \
-    npm install
+RUN apk update && npm install -g npm
+CMD ["npm","ci"]
 
 ENTRYPOINT /app/entrypoint.sh
