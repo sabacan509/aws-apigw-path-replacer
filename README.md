@@ -27,7 +27,7 @@ cd aws-apigw-path-replacer
 ## For This App User: * You need Node.js (npm) before.
 ### Build app, and start API Server and GUI Server
 ```
-npm install
+npm ci
 npm run build
 npm run express:run
 ```
@@ -40,6 +40,7 @@ http://localhost:3000/
 ### For docker user, instead of above build and run:
 ```
 docker-compose up -d --build
+* It may take a few minutes for the service to start
 ```
 ```
 http://localhost:3131/
@@ -51,11 +52,6 @@ The main components for this app are vue-cli and aws-sdk for Node.js.
 ### Compiles and hot-reloads for development
 ```
 npm run serve
-```
-
-### Run your tests
-```
-npm run test
 ```
 
 ### Lints and fixes files

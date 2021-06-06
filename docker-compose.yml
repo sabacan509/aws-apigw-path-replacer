@@ -5,7 +5,7 @@ services:
     ports:
       - 3131:3000
     volumes:
-      - .:/app
+      - ./:/app
       - ~/.aws:/root/.aws
     stdin_open: true
     tty: true

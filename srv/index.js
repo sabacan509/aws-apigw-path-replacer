@@ -1,8 +1,8 @@
-import express from 'express';
-var fs = require('fs');
+const express = require('express')
+const fs = require('fs');
 const bodyParser = require('body-parser');
-var AWS = require('aws-sdk');
-
+const AWS = require('aws-sdk');
+const port = process.env.PORT || 3000;
 const PROFILE_NAME = 'aws_apigw_path_replacer';
 
 function getApiGwCtrl(regionId) {
@@ -67,141 +67,144 @@ function isExistsTargetAWSProfile(data)
   }
 }
 
-export default (app, http) => {
-  app.use(bodyParser.urlencoded({
-    extended: true
+const app = express();
+app.use(express.urlencoded({
+  extended: true
 }));
-app.use(bodyParser.json());
-
-  app.get('/profile-check', (req, res) => {
-    let dir = process.env[process.platform == "win32" ? "USERPROFILE" : "HOME"];
-    let path = dir + "/.aws/credentials"
-    try {
-      fs.readFile(path, 'utf8', function(err, data) {
-        if (err) {
-          console.log(err);
-        }
-        if (data) {
-          if (isExistsTargetAWSProfile(data)) {
-            res.json({
-              profile: "ok"
-            })
-          } else {
-            res.json({
-              error: "Profile check ERROR: No exists profile [" + PROFILE_NAME + "] in AWS credentials file."
-            })
-          }
-        } else {
-          console.log(err);
-          res.json({
-            error: "Profile check ERROR: No exists AWS credentials file: " + path
-          });
-        }
-      });
-    }
-    catch (err) {
-      console.log(err);
-      res.json({
-        error: "Profile check ERROR: No exists AWS credentials file: " + path
-      });
-    }
-  });
-
-  // Call: AwsApiGateway.getRestApis()
-  app.get('/apiget', (req, res) => {
-    let regionId = req.query.regionId;
-
-    let apigateway = getApiGwCtrl(regionId);
-    var params = {
-    };
-    apigateway.getRestApis(params, function(err, data) {
+app.use(express.json());
+app.use('/', express.static('dist'));
+app.get('/profile-check', (req, res) => {
+  let dir = process.env[process.platform == "win32" ? "USERPROFILE" : "HOME"];
+  let path = dir + "/.aws/credentials"
+  try {
+    fs.readFile(path, 'utf8', function(err, data) {
       if (err) {
-        console.log(err, err.stack);
-        res.status(400);
-        res.json({
-          error: "invalid parameter"
-        });
+        console.log(err);
       }
-      else {
-        let itemList = [];
-        console.log(data);
-        for(let i=0; i < data.items.length; i++) {
-          let item = data.items[i];
-          itemList.push({
-            id: item.id,
-            name: item.name
+      if (data) {
+        if (isExistsTargetAWSProfile(data)) {
+          res.json({
+            profile: "ok"
+          })
+        } else {
+          res.json({
+            error: "Profile check ERROR: No exists profile [" + PROFILE_NAME + "] in AWS credentials file."
           })
         }
-        let r = {
-          items: itemList
-        }
-        res.json(r);
-      }
-    });
-  });
-
-  // Call: AwsApiGateway.getResources()
-  app.get('/resources', (req, res) => {
-    let regionId = req.query.regionId;
-    let restApiId = req.query.restApiId;
-
-    let apigateway = getApiGwCtrl(regionId);
-    var params = {
-      restApiId: restApiId
-    };
-    apigateway.getResources(params, function(err, data) {
-      if (err) console.log(err, err.stack);
-      else {
-        let itemList = [];
-        console.log(data);
-        let r = data;
-        res.json(r);
-      }
-    });
-  });
-
-  // Call: AwsApiGateway.updateResource()
-  app.put('/resources/:id', (req, res) => {
-    let regionId = req.query.regionId;
-    let restApiId = req.query.restApiId;
-    let resourceId = req.params.id;
-    let op = req.query.op;
-    let path = req.query.path;
-    let value = req.query.value;
-    console.log(regionId);
-    console.log("restApiId: " + restApiId);
-    console.log(resourceId);
-
-    let apigateway = getApiGwCtrl(regionId);
-    var params = {
-      restApiId: restApiId,
-      resourceId: resourceId,
-      patchOperations: [
-        {
-          // from: "",
-          op: op, //"replace",
-          path: path, // /pathPart,
-          value: value
-        }
-      ]
-    };
-    console.log(params);
-    apigateway.updateResource(params, function(err, data) {
-      if (err) {
-        console.log(err, err.stack);
-        res.status(400);
+      } else {
+        console.log(err);
         res.json({
-          error: "update error"
-        });
-      }
-      else {
-        console.log(data);
-        let r = data;
-        res.json({
-          result: "success"
+          error: "Profile check ERROR: No exists AWS credentials file: " + path
         });
       }
     });
+  }
+  catch (err) {
+    console.log(err);
+    res.json({
+      error: "Profile check ERROR: No exists AWS credentials file: " + path
+    });
+  }
+});
 
+// Call: AwsApiGateway.getRestApis()
+app.get('/apiget', (req, res) => {
+  let regionId = req.query.regionId;
+
+  let apigateway = getApiGwCtrl(regionId);
+  var params = {
+  };
+  apigateway.getRestApis(params, function(err, data) {
+    if (err) {
+      console.log(err, err.stack);
+      res.status(400);
+      res.json({
+        error: "invalid parameter"
+      });
+    }
+    else {
+      let itemList = [];
+      console.log(data);
+      for(let i=0; i < data.items.length; i++) {
+        let item = data.items[i];
+        itemList.push({
+          id: item.id,
+          name: item.name
+        })
+      }
+      let r = {
+        items: itemList
+      }
+      res.json(r);
+    }
   });
-}
+});
+
+// Call: AwsApiGateway.getResources()
+app.get('/resources', (req, res) => {
+  let regionId = req.query.regionId;
+  let restApiId = req.query.restApiId;
+
+  let apigateway = getApiGwCtrl(regionId);
+  var params = {
+    restApiId: restApiId
+  };
+  apigateway.getResources(params, function(err, data) {
+    if (err) console.log(err, err.stack);
+    else {
+      let itemList = [];
+      console.log(data);
+      let r = data;
+      res.json(r);
+    }
+  });
+});
+
+// Call: AwsApiGateway.updateResource()
+app.put('/resources/:id', (req, res) => {
+  let regionId = req.query.regionId;
+  let restApiId = req.query.restApiId;
+  let resourceId = req.params.id;
+  let op = req.query.op;
+  let path = req.query.path;
+  let value = req.query.value;
+  console.log(regionId);
+  console.log("restApiId: " + restApiId);
+  console.log(resourceId);
+
+  let apigateway = getApiGwCtrl(regionId);
+  var params = {
+    restApiId: restApiId,
+    resourceId: resourceId,
+    patchOperations: [
+      {
+        // from: "",
+        op: op, //"replace",
+        path: path, // /pathPart,
+        value: value
+      }
+    ]
+  };
+  console.log(params);
+  apigateway.updateResource(params, function(err, data) {
+    if (err) {
+      console.log(err, err.stack);
+      res.status(400);
+      res.json({
+        error: "update error"
+      });
+    }
+    else {
+      console.log(data);
+      let r = data;
+      res.json({
+        result: "success"
+      });
+    }
+  });
+
+});
+
+app.listen(port, () => {
+  console.log(`Example app listening at http://localhost:${port}`)
+})

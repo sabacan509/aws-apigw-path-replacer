@@ -186,7 +186,7 @@ export default {
       q += "&op=replace";
       q += "&path=/parentId";
       q += "&value=" + parentId;
-      axios.put('/resources/' + resourceId + '?' + q).then((response) => {
+      axios.put('/resources/' + resourceId + '?' + q).then(() => {
         this.selectAPI(this.selectedApiId);
 				this.$refs.RscDrawer.close();
       }, (error) => {

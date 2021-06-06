@@ -53,7 +53,7 @@ export default {
     //     this.isOpen = !this.isOpen
     //   }
     // },
-    dragstart: function(e) {
+    dragstart: function() {
       // console.log("drag: " + this.item.id);
       this.$emit('drag-handler', this.item)
     },
@@ -61,7 +61,7 @@ export default {
     //   console.log("drag-enter: " + this.item.id);
     //   this.$emit('drag-enter-handler', this.item)
     // },
-    dragover: function(e) {
+    dragover: function() {
       // console.log("drag-over: " + this.item.id);
       this.$emit('drag-over-handler', this.item)
     },
